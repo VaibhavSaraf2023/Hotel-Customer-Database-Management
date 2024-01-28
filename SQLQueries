@@ -1,0 +1,94 @@
+select customer_id, first_name, last_name, age, gender, email, contact_number, check_In_date, check_out_date, Number_of_Guest, Room_type, room_number from Guest_Data
+order by check_in_date, check_out_date, number_of_guest;
+
+create table Senior_Citizens as select * from guest_data where age=60 or age>60 order by age,first_name,last_name,gender;
+
+select customer_id, first_name,last_name, dob, amount_paid,
+case when gender='F' and check_In_date like '%-03-%' then (amount_paid - amount_paid * 10/100)
+end as womens_day_discount 
+from guest_data
+order by womens_day_discount desc
+limit 10
+
+select Customer_Id, First_Name, Last_Name, check_In_date, check_out_date, Room_Rate, Amount_Paid,
+case when (amount_paid - room_rate) > 0
+then (amount_paid - room_rate)
+end as Extra_Service_Amount
+from guest_data;
+
+select Customer_Id, First_Name, Last_Name, check_In_date, check_out_date, Room_Rate, Amount_Paid,
+case when (amount_paid - room_rate) < 0
+then (amount_paid - room_rate)
+end as Payment_Pending
+from guest_data;
+
+select age, count(Customer_Id) as Age_Count from guest_data
+group by age
+order by age
+
+select customer_id, first_name, last_name, gender, age, contact_number, check_in_date,check_out_date,room_type from Customers_Data
+where (check_out_date - check_in_date) > 5
+
+select room_type, count(room_type) as Usage_Count from guest_data
+group by room_type
+order by count(room_type) desc
+limit 2;
+
+select customer_id,first name, last_name, amount_paid from guest_data
+order by amount_paid,customer_id desc
+limit 5;
+
+select customer_id, first_name, last_name, contact_number, previous_visits
+case when previous_visits >=5 then 'Free Restaurant Service' 
+end as Offer
+from guest_data;
+
+select customer_id, first_name, last_name,contact_number,check_in_date, check_out_date, room_type, room_rate, service_used, payment_method, amount_paid 
+from guest data
+
+INSERT INTO Guest_data (Customer_Id, First_Name, Last_Name, Age, DOB, Gender, Email, Contact_Number, Address, Visit_Purpose, Guest_Status, check_In_date, check_out_date, Number_of_Guest, Room_Type, Room_Rate, Room_Availability, Previous_Visits, Room_Number, Payment_Method, Amount_Paid, Service_Used, Ratings)
+VALUES (39, 'Joyaal', 'Joy', 25, '28-05-1998', 'M', 'joyaal@yahoo.com', '9678426584', ' 383 Gandhi Nagar, Delhi', 'Tourism', 'Checked-Out', '2023-08-12', '2023-08-20', 5, 'Non AC Room', 2600,  'Available', 7, 148, 'Credit Card', 4000, 'Spa, Pool, Gym', 4.3), (40, 'Vaibhav', 'Saraf', 26, '15-07-1997', 'M', 'vaibhav@gmail.com', '9547632546', '497 Park View, Jaipur', 'Business', 'Checked-In', '2023-05-05', '2023-05-09', 8, 'AC Room', 3000, 'Unavailable', 6, 140, 'Cash' , 4200, 'Restaurant, Pool', 4.5);
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+select room_number, guest_status, room_availability, check_out_date as Room_Available_From
+from guest_data
+where guest_status='Checked-Out' and room_availability='Unavailable'
+
+update guest_data
+set room_availability='Available'
+where guest_status='Checked-Out' and room_availability='Unavailable'
+------------------------------------------------------------------------------------------------------------------------------------------
+
+select extract(month from check_in_date) as Month, count(*) as Bookings_Per_Month from guest_data
+group by extract(month from check_in_date)
+
+select room_number, room_type, check_out_date as Room_Available_From from guest_data
+where room_type='AC Room' and room_availability='Available'
+order by Check_out_date
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
